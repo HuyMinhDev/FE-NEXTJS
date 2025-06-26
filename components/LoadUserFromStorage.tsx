@@ -8,6 +8,9 @@ const LoadUserFromStorage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Only run on client-side to avoid SSR issues
+    if (typeof window === "undefined") return;
+
     const timeout = setTimeout(() => {
       const raw = localStorage.getItem("user");
       if (raw) {
@@ -21,7 +24,7 @@ const LoadUserFromStorage = () => {
     }, 0);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [dispatch]);
 
   return null; // QUAN TRỌNG: không render gì cả
 };
